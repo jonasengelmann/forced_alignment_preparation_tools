@@ -3,10 +3,10 @@
 import os
 import codecs
 
-"""Simple template script that phonetically transcribes entries from
+"""Simple template script that phonemically transcribes entries from
 a dictionary according to a simple rule based system. """
 
-# Dictionary filename with entries to phonetically transcribe:
+# Dictionary filename with entries to phonemically transcribe:
 dictionary_file = "./Dictionary.txt"
 
 result = []
@@ -21,10 +21,10 @@ words = text.split("\n")
 for word in words:
     single_letters = list(word)
     length = len(single_letters)
-    phonetic_transcription = []
+    phonemic_transcription = []
     skip_next_letter = False
 
-    # Create phonetic transcription letter by letter:
+    # Create phonemic transcription letter by letter:
     for idx, letter in enumerate(single_letters):
 
         if skip_next_letter:
@@ -35,7 +35,7 @@ for word in words:
         # Example:
         # ch -> x
         if idx < length - 1 and letter == "c" and single_letters[idx + 1] == "h":
-            phonetic_transcription.append("x")
+            phonemic_transcription.append("x")
             skip_next_letter = True
 
         # Single letters:
@@ -43,22 +43,22 @@ for word in words:
         # c -> ts
         # ć -> s
         elif letter == "c":
-            phonetic_transcription.append("ts")
+            phonemic_transcription.append("ts")
 
         elif letter == "ć":
-            phonetic_transcription.append("s")
+            phonemic_transcription.append("s")
 
         # Final position:
         # Example:
         # final b->p
         elif letter == "b" and idx == length - 1:
-            phonetic_transcription.append("p")
+            phonemic_transcription.append("p")
 
         # If no rule, take over single letter:
         else:
-            phonetic_transcription.append(letter)
+            phonemic_transcription.append(letter)
 
-    result.append(word + " " + " ".join(phonetic_transcription))
+    result.append(word + " " + " ".join(phonemic_transcription))
 
 # Save to text file:
 with codecs.open("Dictionary_with_transcription.txt", 'w', encoding="utf-8") as output:
