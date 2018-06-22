@@ -3,35 +3,45 @@
 import os
 import codecs
 
-current_dir = os.getcwd()
-words = []
 
-for file in os.listdir(current_dir):
-    if file.endswith(".txt") or file.endswith(".lab"):
-        with codecs.open(file, 'r', encoding="utf-8") as txtfile:
-            transcripttext = txtfile.read()
+def extract_words(file):
+    '''Extracts words of a simple transcription file and returns
+    them in a list without punctuation'''
 
-        # Remove Punctuation
-        transcripttext = transcripttext.replace(",", "")
-        transcripttext = transcripttext.replace(".", "")
-        transcripttext = transcripttext.replace("?", "")
-        transcripttext = transcripttext.replace("!", "")
+    # Load file:
+    with codecs.open(file, 'r', encoding="utf-8") as txtfile:
+        transcript = txtfile.read()
 
-        # Remove possible double space:
-        transcripttext = transcripttext.replace("  ", " ")
+    # Remove Punctuation:
+    transcript = transcript.replace(",", "")
+    transcript = transcript.replace(".", "")
+    transcript = transcript.replace("?", "")
+    transcript = transcript.replace("!", "")
 
-        # Lower capital letters:
-        transcripttext = transcripttext.lower()
+    # Remove possible double space:
+    transcript = transcript.replace("  ", " ")
 
-        # Split in words and save in list:
-        words = words + transcripttext.split(" ")
+    # Lower capital letters:
+    transcript = transcript.lower()
 
-# Make list of words unique:
-words = list(set(words))
+    # Return single words in a list:
+    return transcript.split(" ")
 
-# Sort alphabetically:
-words = sorted(words)
 
-# Save to text file:
-with codecs.open("Dictionary.txt", 'w', encoding="utf-8") as output:
-    output.write("\n".join(words))
+if __name__ == "__main__":
+    current_dir = os.getcwd()
+    words = []
+
+    for file in os.listdir(current_dir):
+        if file.endswith(".txt") or file.endswith(".lab"):
+            words = words + extract_words(file)
+
+    # Make list of words unique:
+    words = list(set(words))
+
+    # Sort alphabetically:
+    words = sorted(words)
+
+    # Save to text file:
+    with codecs.open("Dictionary.txt", 'w', encoding="utf-8") as output:
+        output.write("\n".join(words))
