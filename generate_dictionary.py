@@ -3,7 +3,6 @@
 import os
 import codecs
 
-
 def extract_words(file):
     '''Extracts words of a simple transcription file and returns
     them in a list without punctuation'''
@@ -34,7 +33,7 @@ if __name__ == "__main__":
 
     for file in os.listdir(current_dir):
         if file.endswith(".txt") or file.endswith(".lab"):
-            words = words + extract_words(file)
+            words += extract_words(file)
 
     # Make list of words unique:
     words = list(set(words))
