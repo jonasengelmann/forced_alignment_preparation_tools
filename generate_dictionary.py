@@ -32,7 +32,7 @@ if __name__ == "__main__":
     words = []
 
     for file in os.listdir(current_dir):
-        if file.endswith(".txt") or file.endswith(".lab"):
+        if file.endswith(".txt", ".lab"):
             words += extract_words(file)
 
     # Make list of words unique:
